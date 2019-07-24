@@ -1,0 +1,13 @@
+{
+    "name": "thunderbase",
+    "version": "1.0.4",
+    "description": "React Native ThunderBase",
+    "author": "Marco Túlio Tavares",
+    "files": [
+		"index.js",
+        "**/src/"
+    ],
+    "dependencies": {
+        "fast-sort": "^1.5.4"
+    }
+}

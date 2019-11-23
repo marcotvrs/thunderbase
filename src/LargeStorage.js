@@ -123,7 +123,7 @@ export default (_collection) => {
 
     this.removeItem = async (_item) => {
         try {
-            await getKeys(_collection);
+            await getKeys();
             let key = `${_prefix}:${_collection}:${_item._id}`;
             let index = _keys[_collection].indexOf(key);
             _keys[_collection].splice(index, 1);

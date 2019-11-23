@@ -18,7 +18,7 @@ export default (_collection) => {
                 if (!aux[keyName]) aux[keyName] = {};
                 aux[keyName][keys[i]] = true;
             }
-            for (collection in aux)
+            for (let collection in aux)
                 _keys[collection] = Object.keys(aux[collection])
             return _keys[_collection];
         } catch (error) {
@@ -38,7 +38,7 @@ export default (_collection) => {
 
     this.getItems = async () => {
         try {
-            let keys = await getKeys(_collection);
+            let keys = await getKeys();
             let values = await AsyncStorage.multiGet(keys);
             let data = [];
             for (let i = 0; i < values.length; i++)
@@ -51,7 +51,7 @@ export default (_collection) => {
 
     this.insertItem = async (_value) => {
         try {
-            await getKeys(_collection);
+            await getKeys();
             let key = `${_prefix}:${_collection}:${_value._id}`;
             let index = _keys[_collection].indexOf(key);
             if (index === -1) _keys[_collection].push(key);
@@ -65,7 +65,7 @@ export default (_collection) => {
 
     this.insertItems = async (_values) => {
         try {
-            await getKeys(_collection);
+            await getKeys();
             let data = [];
             let keys = [];
             for (let i = 0; i < _values.length; i++) {
@@ -104,7 +104,7 @@ export default (_collection) => {
 
     this.importItems = async (_values) => {
         try {
-            let keys = await getKeys(_collection);
+            let keys = await getKeys();
             if (keys.length) {
                 await AsyncStorage.multiRemove(keys);
                 delete _keys[_collection];
@@ -137,7 +137,7 @@ export default (_collection) => {
 
     this.removeItems = async (_items) => {
         try {
-            await getKeys(_collection);
+            await getKeys();
             let keys = _items.map((item) => `${_prefix}:${_collection}:${item._id}`);
             _keys[_collection] = _keys[_collection].filter((key) => keys.indexOf(key) === -1);
             await AsyncStorage.multiRemove(keys);
@@ -150,7 +150,7 @@ export default (_collection) => {
 
     this.removeAllItems = async () => {
         try {
-            await getKeys(_collection);
+            await getKeys();
             await AsyncStorage.multiRemove(_keys[_collection]);
             delete _keys[_collection];
             Listeners(_collection).invoke();
